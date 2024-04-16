@@ -1,4 +1,4 @@
-<?php use Selector\SelectorController;
+<?php namespace Selector;
 
 include_once(MODX_BASE_PATH.'assets/tvs/selector/lib/controller.class.php');
 class EntfoldersController extends SelectorController
