@@ -2,6 +2,7 @@
 
 use Composer\Command\InitCommand;
 use EvolutionCMS\Generator\Console\Commands\GenerateArticles;
+use EvolutionCMS\Generator\Console\Commands\Init;
 use EvolutionCMS\Generator\Console\Commands\Sleep1000;
 use EvolutionCMS\ServiceProvider;
 
@@ -33,7 +34,7 @@ class GeneratorServiceProvider extends ServiceProvider
     {
         $this->commands([
             GenerateArticles::class,
-            InitCommand::class
+            Init::class
         ]);
         $this->loadViewsFrom(__DIR__.'/../views', $this->namespace);
         $this->loadTranslationsFrom(__DIR__.'/../lang', $this->namespace);
