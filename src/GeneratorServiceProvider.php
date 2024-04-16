@@ -28,6 +28,9 @@ class GeneratorServiceProvider extends ServiceProvider
             __DIR__.'/../routes.php',
             'fa fa-hashtag'
         );
+        $this->loadPluginsFrom(
+            dirname(__DIR__).'/plugins/'
+        );
     }
 
     public function boot()
@@ -42,7 +45,7 @@ class GeneratorServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../publishable/assets' => MODX_BASE_PATH.'assets',
-            __DIR__.'/../publishable/views' => MODX_BASE_PATH.'views',
+            __DIR__.'/../publishable/views'  => MODX_BASE_PATH.'views',
         ]);
     }
 }

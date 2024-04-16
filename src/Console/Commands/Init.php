@@ -151,6 +151,7 @@ class Init extends Command
             'isfolder'  => 1,
             'template'  => $template_generator->id,
             'hidemenu'  => 1,
+            'alias' => 'dsgenerator'
         ]);
 
         $sitecontent_folder_category = SiteContent::create([
@@ -274,6 +275,7 @@ class Init extends Command
         return [
             // Generator
             'generator_folder_id' => ".$sitecontent_folder_generator->id.",
+            'generator_folder_alias' => '".$sitecontent_folder_generator->alias."',
             'categories_folder_id' => ".$sitecontent_folder_category->id.",
         
             'entities_template_id' => ".$template_entitie->id.",
