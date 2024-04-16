@@ -42,6 +42,7 @@ class GeneratorServiceProvider extends ServiceProvider
 
         $this->publishes([
             __DIR__.'/../publishable/assets' => MODX_BASE_PATH.'assets',
+            __DIR__.'/../publishable/views' => MODX_BASE_PATH.'views',
         ]);
     }
 }
