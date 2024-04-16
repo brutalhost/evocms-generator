@@ -81,8 +81,9 @@ class Init extends Command
 
         $template_test = SiteTemplate::create([
             'templatename' => 'DS Тест',
-            'description'  => 'Шаблон для тестовой записи. Description - это tvlist, а content парсит blade теги как при генерации.',
+            'description'  => 'Шаблон для тестовой записи. Аннотации - это tvlist, а контент парсит Blade теги как при генерации через модуль.',
             'content'      => '',
+            'templatealias' => 'dstest',
             'category'     => $category->id,
         ]);
 
@@ -258,13 +259,14 @@ class Init extends Command
             'hidemenu'                             => 1,
             config('docshaker.tv_entities_name')   => $sitecontent_indesit->id.','.$sitecontent_bosch->id,
             config('docshaker.tv_categories_name') => $sitecontent_category_repair->id,
-            'content'                              => `<h1>{{$pagetitle}}</h1>
-<p>Он генерируется в первую очередь, поэтому к нему можно получить доступ прямо из тела контента.</p>
-<p>Попробуйте добавить категории и сущности, чтобы шаблон отобразил их корректно.</p>
-<p>{{ $entities[0]-&gt;pagetitle }} лучший бренд из {{ $entities[1]-&gt;pagetitle }}.</p>
+            'content' => "<h1>{{ \$pagetitle }}</h1>
+<p>Нажмите кнопку 'Посмотреть', и вы увидите, что все переменные здесь автоматически заполнятся из указанных сущностей и категории.</p>
+<p>Pagetitle страницы генерируется в первую очередь, поэтому к нему можно получить доступ прямо из тела контента. Это относится к документам, генерируемым через модуль DocShaker.</p>
+<p>Добавьте в поле 'Аннотация (введение)' через запятую названия TV полей, и они автоматически станут доступны для переменных сущностей и категорий (если они установлены для их шаблонов).</p>
+<p>{{ \$entities[0]->pagetitle }} лучший бренд из {{ \$entities[1]->pagetitle }}. {{ \$category->pagetitle }} - наша главная миссия.</p>
 <p>Как получить список доступных переменных:</p>
-<p>Это категория @dump($category)</p>
-<p>Это сущности @dump($entities)</p>`
+<p>Это категория @dump(\$category)</p>
+<p>Это сущности @dump(\$entities)</p>"
         ];
         \DocumentManager::create($test_document);
 
@@ -282,9 +284,9 @@ class Init extends Command
             // TV
             'tv_entities' => ".$tv_entities->id.",
             'tv_entities_name' => '".$tv_entities->name."',
-            'tv_categories' => '".$tv_categories->id."',
+            'tv_categories' => ".$tv_categories->id.",
             'tv_categories_name' => '".$tv_categories->name."',
-            'tv_ignore_categories_field' => '".$tv_ignore_categories_field->id."',
+            'tv_ignore_categories_field' => ".$tv_ignore_categories_field->id.",
             'tv_ignore_categories_field_name' => '".$tv_ignore_categories_field->name."',
         ];";
         $path   = EVO_CORE_PATH.'/custom/config/docshaker.php';
