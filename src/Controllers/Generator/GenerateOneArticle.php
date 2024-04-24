@@ -10,9 +10,18 @@ class GenerateOneArticle
     {
         $output = null;
         $exitCode = null;
+        $os = strtoupper(PHP_OS);
         if ($option === 'preview') {
-            $c      = exec('cd '.EVO_CORE_PATH.'; php artisan generator:articles '.$matrix->id.' --preview', $output,
-                $exitCode);
+            if (strpos($os, 'WIN') !== false) {
+                // Windows
+                $command = 'cd /d '.EVO_CORE_PATH.' && php artisan generator:articles "'.$matrix->id.'" --preview';
+            } else {
+                // Linux
+                $command = 'cd '.EVO_CORE_PATH.'; php artisan generator:articles "'.$matrix->id.'" --preview';
+            }
+
+            $c = exec($command, $output, $exitCode);
+
 
             ob_start();
             // Выводим dump в буфер
@@ -35,7 +44,15 @@ class GenerateOneArticle
  </div>
 </div>', 200, ['Content-Type' => 'text/html']);
         } elseif ($option === 'one') {
-            $c      = exec('cd '.EVO_CORE_PATH.'; php artisan generator:articles '.$matrix->id.' --one', $output, $exitCode);
+            if (strpos($os, 'WIN') !== false) {
+                // Windows
+                $command = 'cd /d '.EVO_CORE_PATH.' && php artisan generator:articles '.$matrix->id.' --one';
+            } else {
+                // Linux
+                $command = 'cd '.EVO_CORE_PATH.'; php artisan generator:articles '.$matrix->id.' --one';
+            }
+
+            $c = exec($command, $output, $exitCode);
             session()->flash('success', 'Процесс запущен');
             return back();
         }

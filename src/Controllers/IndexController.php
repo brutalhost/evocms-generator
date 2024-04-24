@@ -48,18 +48,39 @@ class IndexController
     }
 
     public function processList() {
-        $output = shell_exec('screen -ls');
+        $os = strtoupper(PHP_OS);
+        $output = '';
 
-        $scripts = [];
-        $lines = explode("\n", $output);
+        if (strpos($os, 'WIN') !== false) {
+            // Windows
+            $output = shell_exec('tasklist');
+            $scripts = [];
+            $lines = explode("\n", $output);
 
-        foreach ($lines as $line) {
-            if (strpos($line, '.generator') !== false) {
-                $parts = explode('.', $line);
-                $id = trim($parts[0]);
-                $name = trim($parts[1]);
-                $name = str_replace('(Detached)', '', $name);
-                $scripts[] = ['id' => $id, 'name' => $name];
+            foreach ($lines as $line) {
+                if (strpos($line, 'php.exe') !== false) {
+                    // Пример обработки строки с именем процесса
+                    // Вам может потребоваться адаптировать эту часть под вашу конкретную логику
+                    $parts = explode(' ', $line);
+                    $id = trim($parts[1]); // Предполагается, что ID процесса находится в этом месте
+                    $name = trim($parts[0]); // Имя процесса
+                    $scripts[] = ['id' => $id, 'name' => $name];
+                }
+            }
+        } else {
+            // Linux
+            $output = shell_exec('screen -ls');
+            $scripts = [];
+            $lines = explode("\n", $output);
+
+            foreach ($lines as $line) {
+                if (strpos($line, '.generator') !== false) {
+                    $parts = explode('.', $line);
+                    $id = trim($parts[0]);
+                    $name = trim($parts[1]);
+                    $name = str_replace('(Detached)', '', $name);
+                    $scripts[] = ['id' => $id, 'name' => $name];
+                }
             }
         }
 
@@ -68,4 +89,5 @@ class IndexController
         }
         return $scripts;
     }
+
 }

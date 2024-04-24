@@ -11,10 +11,19 @@ class KillProcess
     {
         $output   = null;
         $exitCode = null;
-        $command = "kill $id";
+        $os = strtoupper(PHP_OS);
+
+        if (strpos($os, 'WIN') !== false) {
+            // Windows
+            $command = 'taskkill /F /PID ' . $id;
+        } else {
+            // Linux
+            $command = 'kill ' . $id;
+        }
 
         // Выполнение команды
         exec($command, $output, $exitCode);
+
 
         // Проверка успешности выполнения команды
         if ($exitCode === 0) {

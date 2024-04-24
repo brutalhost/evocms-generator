@@ -2,7 +2,6 @@
 
 namespace EvolutionCMS\Generator\Controllers\Generator;
 
-use EvolutionCMS\Generator\Jobs\GenerateCombination;
 use EvolutionCMS\Generator\Models\Matrix;
 use Illuminate\Support\Facades\Queue;
 
@@ -12,9 +11,19 @@ class GenerateArticles
     {
         $pname = 'generator_matrix_' . $matrix->id . '_all';
         if ($this->isEmptySession($pname)) {
-            $output   = null;
+            $output = null;
             $exitCode = null;
-            $pid     = exec('nice -n -5 screen -dmS '.$pname.' bash -c "cd '.EVO_CORE_PATH.'; php artisan generator:articles '.$matrix->id.'"', $output, $exitCode);
+            $os = strtoupper(PHP_OS);
+
+            if (strpos($os, 'WIN') !== false) {
+                $command = 'cmd /C "cd /d ' . EVO_CORE_PATH . ' && start /B php artisan generator:articles ' . $matrix->id;
+            } else {
+                // Linux
+                $command = 'nice -n -5 screen -dmS ' . $pname . ' bash -c "cd ' . EVO_CORE_PATH . '; php artisan generator:articles ' . $matrix->id . '"';
+            }
+
+            $pid = exec($command, $output, $exitCode);
+
             session()->flash('success', 'Процесс запущен');
         } else {
             session()->flash('success', 'Процесс уже запущен, попробуйте позже');
@@ -25,7 +34,7 @@ class GenerateArticles
 
     public function isEmptySession(string $scriptName)
     {
-        $output = shell_exec('screen -ls '.$scriptName);
+        $output = shell_exec('screen -ls ' . $scriptName);
         return strpos($output, $scriptName) === false;
     }
 }
