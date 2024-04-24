@@ -14,9 +14,9 @@
 </ul>
 <h4 class="code-line" data-line-start="10" data-line-end="11"><a id="_10"></a>Заголовок</h4>
 <p class="has-line-data" data-line-start="11" data-line-end="16">Заполняется так, как если бы все содержимое находилось внутри директивы <code>{{ $вашконтент }}</code>, что аналогично <code>echo($вашконтент)</code>.<br>
-    Пример заполнения: <code>$category-&gt;pagetitle . ' в ' . $entitie-&gt;pagetitle</code> превратится в "<strong>Ремонт стиральных машин</strong> в <strong>Москва</strong>". При условии, что pagetitle у категории будет <em>Ремонт стиральных машин</em>, а pagetitle первой указанной сущности - <em>Москва</em>.<br>
+    Пример заполнения: <code>$category-&gt;pagetitle . ' в ' . $entities[0]-&gt;pagetitle</code> превратится в "<strong>Ремонт стиральных машин</strong> в <strong>Москва</strong>". При условии, что pagetitle у категории будет <em>Ремонт стиральных машин</em>, а pagetitle первой указанной сущности - <em>Москва</em>.<br>
     Чтобы появилось склонение сущности города, надо создать соответствующее tv поле, привязать его к шаблону и добавить в поле формы <strong>tvList - Сущности</strong>. Тогда к нему можно будет обращаться как к <code>$entities[n]-&gt;вашtv</code>.<br>
-    Проверку на непустое значение нужно делать самостоятельно. Например, если поле не заполнено, то можно вывести его так: <code>$category-&gt;pagetitle . 'в' . ($entities[0]-&gt;tv ?? $entities[0]-&gt;pagetitle)</code>. <code>??</code> - если поле не пустое, выведется указанное значение. Если пустое - выведется то, что прописано справа от <code>??</code>.<br>
+    Проверку на непустое значение нужно делать самостоятельно. Например, если поле не заполнено, то можно вывести его так: <code>$category-&gt;pagetitle . 'в' . (empty($entities[0]-&gt;tv) ? $entities[0]-&gt;pagetitle : $entities[0]-&gt;tv)</code>.<br>
     Если указано несколько папок сущностей в <strong>Папки сущностей</strong> - обращаться к ним через <code>$entities[n]</code>, где <em>n</em> - порядковый номер, начиная с 0.</p>
 <h4 class="code-line" data-line-start="16" data-line-end="17"><a id="_16"></a>Контент</h4>
 <p class="has-line-data" data-line-start="17" data-line-end="19">Всё то же самое, что и у поля <strong>Заголовок</strong>. Заполняется как Blade шаблон, то есть директивы <code>{{ $var }}</code> нужно проставлять вручную. Доступна переменная <code>$pagetitle</code>.<br>
