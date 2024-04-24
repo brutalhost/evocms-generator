@@ -1,10 +1,8 @@
 {
   "name": "brutalhost/evocms-generator",
   "description": "Generator module for evocms 3.x",
-  "version": "0.1.0",
-
+  "version": "0.1.1",
   "require": {
-
   },
   "autoload": {
     "psr-4": {
@@ -16,7 +14,6 @@
       "providers": [
         "EvolutionCMS\\Generator\\GeneratorServiceProvider"
       ]
-
     }
   }
 }
