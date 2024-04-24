@@ -277,12 +277,14 @@ class Init extends Command
             'generator_folder_id' => ".$sitecontent_folder_generator->id.",
             'generator_folder_alias' => '".$sitecontent_folder_generator->alias."',
             'categories_folder_id' => ".$sitecontent_folder_category->id.",
-        
+
             'entities_template_id' => ".$template_entitie->id.",
             'entities_folder_template_id' => ".$template_entitie_folder->id.",
-        
+
             'image_field_from_category' => '".$tv_image->name."',
-        
+            'images_folder' => 'assets/images/docshaker/',
+            'images_font_path' => MODX_BASE_PATH.'assets/fonts/ttf/ofont.ru_AGGaramond Cyr.ttf',
+
             // TV
             'tv_entities' => ".$tv_entities->id.",
             'tv_entities_name' => '".$tv_entities->name."',
