@@ -34,7 +34,19 @@ class GenerateArticles
 
     public function isEmptySession(string $scriptName)
     {
-        $output = shell_exec('screen -ls ' . $scriptName);
+        $os = strtoupper(PHP_OS);
+        $output = '';
+
+        if (strpos($os, 'WIN') !== false) {
+            // Windows
+            $output = shell_exec('tasklist /FI "IMAGENAME eq ' . $scriptName . '" /NH');
+        } else {
+            // Linux
+            $output = shell_exec('ps aux | grep ' . $scriptName . ' | grep -v grep');
+        }
+
+        // Проверяем, содержит ли вывод имя скрипта
         return strpos($output, $scriptName) === false;
     }
+
 }

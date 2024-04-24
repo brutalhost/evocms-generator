@@ -283,7 +283,7 @@ class Init extends Command
 
             'image_field_from_category' => '".$tv_image->name."',
             'images_folder' => 'assets/images/docshaker/',
-            'images_font_path' => MODX_BASE_PATH.'assets/fonts/ttf/ofont.ru_AGGaramond Cyr.ttf',
+            'images_font' => 'assets/fonts/ttf/ofont.ru_AGGaramond Cyr.ttf',
 
             // TV
             'tv_entities' => ".$tv_entities->id.",

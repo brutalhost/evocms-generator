@@ -104,7 +104,7 @@ class GenerateImages extends Command
                 (int)$this->option('blue') ?? 0,
             ); // Функция выделения цвета для текста
             $y = $size[1] / 2;//+($font_size*$delta)/2;
-            $font = config('docshaker.images_font_path'); // Ссылка на шрифт
+            $font = MODX_BASE_PATH.config('docshaker.images_font'); // Ссылка на шрифт
             $degree = 0; // Угол поворота текста в градусах
 
             if ($kol * ($font_size / $delta) / 2 > $size[0] / 2) {
